@@ -7,3 +7,7 @@ CREATE TABLE animals (
     weight_kg float NOT NULL DEFAULT 0,
 	PRIMARY KEY (id)
 );
+
+
+-- Adding Species column
+ALTER TABLE animals ADD COLUMN species varchar(100);
