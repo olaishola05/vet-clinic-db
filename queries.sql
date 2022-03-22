@@ -10,7 +10,6 @@ SELECT * FROM animals WHERE weight_kg >= 10.4 AND weight_kg <= 17.3;
 
 
 -- Setting species column to unspecified
-
 BEGIN;
 
 UPDATE animals SET species = 'unspecified' WHERE species IS NULL;
@@ -24,8 +23,8 @@ UPDATE animals SET species = 'pokemon' WHERE species IS NULL;
 
 COMMIT;
 
--- DELETE ALL ITEMS FROM THE TABLE IN A TRANSACTION
 
+-- DELETE ALL ITEMS FROM THE TABLE IN A TRANSACTION
 BEGIN;
 
 DELETE FROM animals;
@@ -46,3 +45,16 @@ ROLLBACK TO animals_deleted;
 UPDATE animals SET weight_kg = weight_kg * - 1 WHERE weight_kg < 0;
 
 COMMIT;
+
+-- COUNTS
+SELECT COUNT(id) FROM animals;
+SELECT COUNT(*) FROM animals WHERE escape_attempts <= 0;
+SELECT AVG(weight_kg) FROM animals;
+
+SELECT neutered, SUM(escape_attempts) FROM animals WHERE neutered = true OR neutered = false GROUP BY neutered;
+SELECT species, MIN(weight_kg), MAX(weight_kg) FROM animals GROUP BY species;
+
+SELECT species,
+    SUM(escape_attempts),
+    COUNT(escape_attempts),
+    SUM(escape_attempts) / COUNT(escape_attempts) as Average FROM animals WHERE extract(YEAR FROM date_of_birth) BETWEEN 1990 AND 2000 GROUP BY species;
