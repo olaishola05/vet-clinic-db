@@ -14,3 +14,15 @@ INSERT INTO animals (name, date_of_birth, weight_kg,neutered, escape_attempts) V
 INSERT INTO animals (name, date_of_birth, weight_kg,neutered, escape_attempts) VALUES ('Ditto', '2022-05-14', 22, true, 4);
 
 
+-- Adding info to owners table
+INSERT INTO owners (full_name, age) VALUES ('Sam Smith', 34);
+INSERT INTO owners (full_name, age) VALUES ('Jennifer Orwell', 19);
+INSERT INTO owners (full_name, age) VALUES ('Bob', 45);
+INSERT INTO owners (full_name, age) VALUES ('Melody Pond', 77);
+INSERT INTO owners (full_name, age) VALUES ('Dean Winchester', 14);
+INSERT INTO owners (full_name, age) VALUES ('Jodie Whittaker', 38);
+
+
+INSERT INTO species(name) VALUES('Pokemon');
+INSERT INTO species(name) VALUES('Digimon');
+

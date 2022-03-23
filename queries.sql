@@ -58,3 +58,8 @@ SELECT species,
     SUM(escape_attempts),
     COUNT(escape_attempts),
     SUM(escape_attempts) / COUNT(escape_attempts) as Average FROM animals WHERE extract(YEAR FROM date_of_birth) BETWEEN 1990 AND 2000 GROUP BY species;
+
+
+-- UPDATE animals SET A.species_id = S.species_id, A.name = 'Digimon' 
+-- JOIN species
+-- WHERE name LIKE '%mon'
