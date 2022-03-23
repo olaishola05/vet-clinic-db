@@ -9,5 +9,21 @@ CREATE TABLE animals (
 );
 
 
+CREATE TABLE owners (
+    owners_id INT GENERATED ALWAYS AS IDENTITY,
+    full_name VARCHAR (100) NOT NULL,
+    age INT,
+    PRIMARY KEY(owners_id)
+);
+
+CREATE TABLE species(
+    species_id INT GENERATED ALWAYS AS IDENTITY,
+    name VARCHAR(100) NOT NULL,
+    PRIMARY KEY(species_id)
+)
+
 -- Adding Species column
 ALTER TABLE animals ADD COLUMN species varchar(100);
+ALTER TABLE animals DROP COLUMN species;
+
+ALTER TABLE animals ADD CONSTRAINT species_id FOREIGN KEY (species_id) REFERENCES species (species_id) ON DELETE CASCADE;
