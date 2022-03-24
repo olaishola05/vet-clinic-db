@@ -37,3 +37,15 @@ UPDATE animals SET owners_id = owners.owners_id FROM owners WHERE animals.name I
 UPDATE animals SET owners_id = owners.owners_id FROM owners WHERE animals.name IN ('Angemon', 'Boarmon') AND owners.full_name = 'Dean Winchester';
 
 
+-- Populating Vets
+INSERT INTO vets (name, age, date_of_graduation) VALUES ('William Tatcher',45, '2000-03-23');
+INSERT INTO vets (name, age, date_of_graduation) VALUES ('Maisy Smith',26, '2019-01-17');
+INSERT INTO vets (name, age, date_of_graduation) VALUES ('Stephanie Mendez',64, '1981-05-04');
+INSERT INTO vets (name, age, date_of_graduation) VALUES ('Jack Harkness', 38, '2008-06-08');
+
+
+INSERT INTO specializations VALUES (1, 1);
+INSERT INTO specializations VALUES (2, 3);
+INSERT INTO specializations VALUES (1, 3);
+INSERT INTO specializations VALUES (2, 4);
+
