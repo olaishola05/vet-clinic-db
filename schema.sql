@@ -31,3 +31,33 @@ ADD species_id INT,
 ADD owners_id INT,
 ADD CONSTRAINT fk_species FOREIGN KEY (species_id) REFERENCES species(species_id) ON DELETE CASCADE,
 ADD CONSTRAINT fk_owners FOREIGN KEY (owners_id) REFERENCES owners (owners_id) ON DELETE CASCADE
+
+
+-- Create Table Vets
+CREATE TABLE vets (
+    vets_id INT GENERATED ALWAYS AS IDENTITY,
+    name VARCHAR (100) NOT NULL,
+    age INT,
+    date_of_graduation DATE,
+    PRIMARY KEY(vets_id)
+);
+
+-- create table specicializions
+CREATE TABLE specializations (
+    species_id bigint NOT NULL,
+    vets_id bigint NOT NULL,
+    FOREIGN KEY (species_id) REFERENCES species (species_id) ON DELETE  RESTRICT ON UPDATE CASCADE,
+    FOREIGN KEY (vets_id) REFERENCES vets (vets_id) ON DELETE  RESTRICT ON UPDATE CASCADE,
+    PRIMARY KEY (species_id, vets_id)
+);
+
+-- create table visits
+CREATE TABLE visits (
+    visit_id INT GENERATED ALWAYS AS IDENTITY,
+    vets_id bigint NOT NULL,
+    animals_id bigint NOT NULL,
+    date_of_visit DATE,
+    FOREIGN KEY (animals_id) REFERENCES animals (id) ON DELETE  RESTRICT ON UPDATE CASCADE,
+    FOREIGN KEY (vets_id) REFERENCES vets (vets_id) ON DELETE  RESTRICT ON UPDATE CASCADE
+    PRIMARY KEY (visit_id, vets_id, animals_id)
+);
