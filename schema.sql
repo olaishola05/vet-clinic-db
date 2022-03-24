@@ -26,12 +26,8 @@ CREATE TABLE species(
 ALTER TABLE animals ADD COLUMN species varchar(100);
 ALTER TABLE animals DROP COLUMN species;
 
-ALTER TABLE animals ADD species_id INT NOT NULL,
- ADD CONSTRAINT fk_species 
- FOREIGN KEY (species_id) REFERENCES species (species_id) ON DELETE CASCADE;
-
-
 ALTER TABLE animals 
-    ADD owners_id INT NOT NULL, 
-    ADD CONSTRAINT fk_owners 
-    FOREIGN KEY (owners_id) REFERENCES owners (owners_id) ON DELETE CASCADE;
+ADD species_id INT, 
+ADD owners_id INT,
+ADD CONSTRAINT fk_species FOREIGN KEY (species_id) REFERENCES species(species_id) ON DELETE CASCADE,
+ADD CONSTRAINT fk_owners FOREIGN KEY (owners_id) REFERENCES owners (owners_id) ON DELETE CASCADE

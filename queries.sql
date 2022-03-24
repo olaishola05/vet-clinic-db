@@ -60,6 +60,11 @@ SELECT species,
     SUM(escape_attempts) / COUNT(escape_attempts) as Average FROM animals WHERE extract(YEAR FROM date_of_birth) BETWEEN 1990 AND 2000 GROUP BY species;
 
 
--- UPDATE animals SET A.species_id = S.species_id, A.name = 'Digimon' 
--- JOIN species
--- WHERE name LIKE '%mon'
+UPDATE animals SET species_id = species.species_id FROM species WHERE animals.name LIKE '%mon' AND species.name = 'Digimon'
+UPDATE animals SET species_id = species.species_id FROM species WHERE animals.name NOT LIKE '%mon' AND species.name = 'Pokemon'
+
+UPDATE animals SET owners_id = owners.owners_id FROM owners WHERE animals.name = 'Agumon' AND owners.full_name = 'Sam Smith';
+UPDATE animals SET owners_id = owners.owners_id FROM owners WHERE animals.name IN ('Gabumon', 'Pikachu') AND owners.full_name = 'Jennifer Orwell';
+UPDATE animals SET owners_id = owners.owners_id FROM owners WHERE animals.name IN ('Devimon', 'Plantmon') AND owners.full_name = 'Bob';
+UPDATE animals SET owners_id = owners.owners_id FROM owners WHERE animals.name IN ('Charmander', 'Squirtle', 'Blossom') AND owners.full_name = 'Melody Pond';
+UPDATE animals SET owners_id = owners.owners_id FROM owners WHERE animals.name IN ('Angemon', 'Boarmon') AND owners.full_name = 'Dean Winchester';
