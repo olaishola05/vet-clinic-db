@@ -81,3 +81,29 @@ WHERE O.full_name = 'Dean Winchester' AND AN.escape_attempts <= 0;
 
 SELECT O.full_name, COUNT(O.owners_id) FROM animals AN 
 LEFT JOIN owners O ON O.owners_id = AN.owners_id GROUP BY O.full_name ORDER BY COUNT(*) DESC;
+
+
+-- MANY-TO-MANY
+-- SELECT AN.name, VS.date_of_visit FROM animals AN LEFT JOIN visits VS ON (AN.id = VS.animals_id)
+-- JOIN specializations SP ON (SP.vets_id = VS.vets_id)
+-- GROUP BY AN.name
+
+-- Last Animal seen by Thatcher
+SELECT visits.vets_id, vets.animals_id, animals.name, visits.date_of_visit from visits LEFT JOIN vets ON vets.vets_id = visits.vets_id
+JOIN animals ON animals.id = visits.animals_id WHERE vets.name = 'William Tatcher' ORDER BY date_of_visit DESC LIMIT 1;
+
+SELECT COUNT(visits.vets_id) from visits JOIN vets ON vets.vets_id = visits.vets_id 
+JOIN animals AN ON AN.id = visits.animals_id WHERE vets.name = 'Stephanie Mendez';
+
+-- LIst all vets & Specialities including non-specialists
+SELECT * FROM vets VT LEFT JOIN specializations SP ON SP.vets_id = VT.vets_id
+
+-- ALL animals that visited Stephanie
+SELECT VT.name, VS.visit_id, AN.name, 
+AN.id, VS.date_of_visit, 
+VT.vets_id from vets VT JOIN visits VS ON VS.vets_id = VT.vets_id 
+JOIN animals AN ON AN.id = VS.animals_id WHERE VT.name = 'Stephanie Mendez';
+
+-- ANimal with most vets visits
+SELECT AN.name AS Name, COUNT(VT.animals_id) from visits VT JOIN animals AN ON AN.id = VT.animals_id JOIN vets V ON V.vets_id = VT.vets_id
+GROUP BY AN.name;
