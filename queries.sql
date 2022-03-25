@@ -81,3 +81,52 @@ WHERE O.full_name = 'Dean Winchester' AND AN.escape_attempts <= 0;
 
 SELECT O.full_name, COUNT(O.owners_id) FROM animals AN 
 LEFT JOIN owners O ON O.owners_id = AN.owners_id GROUP BY O.full_name ORDER BY COUNT(*) DESC;
+
+
+-- MANY-TO-MANY
+-- SELECT AN.name, VS.date_of_visit FROM animals AN LEFT JOIN visits VS ON (AN.id = VS.animals_id)
+-- JOIN specializations SP ON (SP.vets_id = VS.vets_id)
+-- GROUP BY AN.name
+
+-- Last Animal seen by Thatcher
+SELECT visits.vets_id, vets.name, animals.name, visits.date_of_visit from visits LEFT JOIN vets ON vets.vets_id = visits.vets_id
+JOIN animals ON animals.id = visits.animals_id WHERE vets.name = 'William Tatcher' ORDER BY date_of_visit DESC LIMIT 1;
+
+SELECT COUNT(visits.vets_id) from visits JOIN vets ON vets.vets_id = visits.vets_id 
+JOIN animals AN ON AN.id = visits.animals_id WHERE vets.name = 'Stephanie Mendez';
+
+-- LIst all vets & Specialities including non-specialists
+SELECT * FROM vets VT LEFT JOIN specializations SP ON SP.vets_id = VT.vets_id
+
+-- ALL animals that visited Stephanie
+SELECT VT.name, VS.visit_id, AN.name, 
+AN.id, VS.date_of_visit, 
+VT.vets_id from vets VT JOIN visits VS ON VS.vets_id = VT.vets_id 
+JOIN animals AN ON AN.id = VS.animals_id WHERE VT.name = 'Stephanie Mendez' AND VS.date_of_visit BETWEEN '2020-04-01' AND '2020-08-30';
+
+-- ANimal with most vets visits
+SELECT AN.name AS Name, COUNT(VT.animals_id) from visits VT JOIN animals AN ON AN.id = VT.animals_id JOIN vets V ON V.vets_id = VT.vets_id
+GROUP BY AN.name;
+
+-- Masy smith first visit
+SELECT visits.vets_id, vets.name, animals.name, visits.date_of_visit from visits LEFT JOIN vets ON vets.vets_id = visits.vets_id
+JOIN animals ON animals.id = visits.animals_id WHERE vets.name = 'Maisy Smith' ORDER BY date_of_visit LIMIT 1;
+
+-- Recent visit animal details
+SELECT VS.date_of_visit, VS.visit_id, AN.name, VT.name, VT.age, VT.date_of_graduation FROM visits VS 
+LEFT JOIN animals AN ON AN.id = VS.animals_id RIGHT JOIN vets VT ON VS.vets_id = VT.vets_id ORDER BY date_of_visit DESC LIMIT 6
+
+--  visits with a vet that did not specialize in that animal's species
+SELECT COUNT(*) AS number_of_visit_no_specialty from visits VS JOIN vets VT ON VS.vets_id = VT.vets_id
+JOIN animals AN ON VS.animals_id = AN.id LEFT JOIN specializations SP ON VT.vets_id = SP.vets_id AND AN.species_id = SP.species_id
+LEFT JOIN species SPE ON SPE.species_id = SP.species_id WHERE SP.species_id != AN.species_id OR SPE.name IS NULL
+
+--  Maisy Smith consider specialty 
+ SELECT COUNT(SP.species_id) as Visit_Count, SP.name 
+    FROM visits VS JOIN animals AN ON VS.animals_id = AN.id 
+    JOIN species SP ON AN.species_id = SP.species_id 
+    JOIN vets VT ON VS.vets_id = VT.vets_id 
+    WHERE VT.name LIKE '%Maisy Smith%' 
+    GROUP BY SP.species_id 
+    ORDER BY visit_Count DESC 
+    LIMIT 1;
